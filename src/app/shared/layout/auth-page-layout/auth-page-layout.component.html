@@ -1,0 +1,11 @@
+<div class="container grid h-svh max-w-none items-center justify-center">
+  <div class="mx-auto flex w-full flex-col justify-center space-y-2 py-8 sm:w-[480px] sm:p-8">
+    <div class="mb-4 flex items-center justify-center">
+      <div class="flex aspect-square size-8 items-center justify-center rounded-lg me-2">
+        <img [src]="(theme$ | async) === 'dark' ? '/logo-ligth.svg' : '/logo.svg'" alt="StarTail Admin" class="size-8 rounded-lg" />
+      </div>
+      <h1 class="text-xl font-medium">StarTail Admin</h1>
+    </div>
+    <ng-content></ng-content>
+  </div>
+</div>

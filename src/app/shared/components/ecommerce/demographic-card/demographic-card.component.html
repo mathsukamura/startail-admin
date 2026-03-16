@@ -1,0 +1,37 @@
+<div class="overflow-hidden rounded-xl border border-border mb-6">
+  <div class="w-full">
+    <app-country-map></app-country-map>
+  </div>
+</div>
+
+<div class="space-y-5">
+  @for (country of countries; track $index) {
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-8 shrink-0 rounded-full overflow-hidden">
+        <img [src]="country.img" [alt]="country.alt" />
+      </div>
+      <div>
+        <p class="text-sm font-semibold">
+          {{ country.name }}
+        </p>
+        <span class="block text-xs text-muted-foreground">
+          {{ country.customers }}
+        </span>
+      </div>
+    </div>
+
+    <div class="flex w-full max-w-[140px] items-center gap-3">
+      <div class="relative h-2 w-full max-w-[100px] rounded-full bg-muted">
+        <div
+          class="absolute left-0 top-0 h-full rounded-full bg-primary"
+          [ngStyle]="{ width: country.percent + '%' }"
+        ></div>
+      </div>
+      <p class="text-sm font-medium">
+        {{ country.percent }}%
+      </p>
+    </div>
+  </div>
+  }
+</div>

@@ -1,0 +1,55 @@
+<header
+  class="z-50 h-16"
+  [ngClass]="{
+    'sticky top-0 w-full': true,
+    'shadow': scrollOffset > 10,
+    'shadow-none': scrollOffset <= 10
+  }"
+>
+  <div
+    class="relative flex h-full items-center gap-3 p-4 sm:gap-4"
+    [ngClass]="{
+      'after:absolute after:inset-0 after:-z-10 after:bg-background/20 after:backdrop-blur-lg': scrollOffset > 10
+    }"
+  >
+    <button
+      (click)="handleToggle()"
+      class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground size-7 max-md:scale-125"
+      [class.max-md:hidden]="(isMobileOpen$ | async)"
+      aria-label="Toggle Sidebar"
+    >
+      <app-icon name="sidebar-toggle" size="16" />
+    </button>
+
+    <div class="shrink-0 bg-border w-[1px] h-6"></div>
+
+    <nav class="hidden items-center space-x-4 lg:flex lg:space-x-4 xl:space-x-6">
+      <a routerLink="/" class="text-sm font-medium transition-colors hover:text-primary"
+        [ngClass]="{ 'text-muted-foreground': !isActive('/') }">
+        Overview
+      </a>
+      <span class="text-sm font-medium text-muted-foreground cursor-not-allowed opacity-50">Customers</span>
+      <span class="text-sm font-medium text-muted-foreground cursor-not-allowed opacity-50">Products</span>
+      <span class="text-sm font-medium text-muted-foreground cursor-not-allowed opacity-50">Settings</span>
+    </nav>
+
+    <div class="ms-auto flex items-center space-x-4">
+      <button
+        class="group relative h-8 flex-1 justify-start rounded-md bg-muted/25 text-sm font-normal text-muted-foreground shadow-none hover:bg-accent hidden sm:inline-flex items-center sm:w-40 lg:w-52 xl:w-64"
+        (click)="focusSearch()"
+      >
+        <app-icon name="search-stroke" size="16" className="absolute start-1.5 top-1/2 -translate-y-1/2" />
+        <span class="ms-6">Search...</span>
+        <kbd class="pointer-events-none absolute end-[0.3rem] top-[0.3rem] hidden h-5 items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium select-none group-hover:bg-accent sm:flex">
+          <span>⌘</span><span>K</span>
+        </kbd>
+      </button>
+
+      <app-theme-toggle-button />
+
+      <app-notification-dropdown />
+
+      <app-user-dropdown />
+    </div>
+  </div>
+</header>

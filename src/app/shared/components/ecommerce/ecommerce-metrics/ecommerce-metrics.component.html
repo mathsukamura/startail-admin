@@ -1,0 +1,33 @@
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6">
+  <app-card-base variant="rounded-2xl" padding="lg">
+    <div class="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl dark:bg-gray-800">
+      <app-icon name="group" size="24" [fillCurrent]="true" className="text-gray-800 size-6 dark:text-white/90" />
+    </div>
+    <div class="flex items-end justify-between mt-5">
+      <div>
+        <span class="text-sm text-gray-500 dark:text-gray-400">Customers</span>
+        <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">3,782</h4>
+      </div>
+      <app-badge color="success">
+        <app-icon name="arrow-up" size="12" [fillCurrent]="true" />
+        11.01%
+      </app-badge>
+    </div>
+  </app-card-base>
+
+  <app-card-base variant="rounded-2xl" padding="lg">
+    <div class="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl dark:bg-gray-800">
+      <app-icon name="box-line" size="24" [fillCurrent]="true" className="text-gray-800 size-6 dark:text-white/90" />
+    </div>
+    <div class="flex items-end justify-between mt-5">
+      <div>
+        <span class="text-sm text-gray-500 dark:text-gray-400">Orders</span>
+        <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">5,359</h4>
+      </div>
+      <app-badge color="error">
+        <app-icon name="arrow-down" size="12" [fillCurrent]="true" />
+        9.05%
+      </app-badge>
+    </div>
+  </app-card-base>
+</div>

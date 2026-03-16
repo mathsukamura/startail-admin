@@ -1,0 +1,42 @@
+<app-component-card title="Form In Modal">
+  <app-button size="sm" (btnClick)="openModal()"> Open Modal </app-button>
+  <app-modal
+    [isOpen]="isOpen"
+    (close)="closeModal()"
+    className="max-w-[584px] p-5 lg:p-10"
+  >
+    <form class="">
+      <h4 class="mb-6 text-lg font-medium text-gray-800 dark:text-white/90">
+        Personal Information
+      </h4>
+
+      <div class="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+        <div class="col-span-1">
+          <app-form-field label="First Name" type="text" placeholder="Emirhan" />
+        </div>
+
+        <div class="col-span-1">
+          <app-form-field label="Last Name" type="text" placeholder="Boruch" />
+        </div>
+
+        <div class="col-span-1">
+          <app-form-field label="Email" type="email" placeholder="emirhanboruch55@gmail.com" />
+        </div>
+
+        <div class="col-span-1">
+          <app-form-field label="Phone" type="text" placeholder="+09 363 398 46" />
+        </div>
+
+        <div class="col-span-1 sm:col-span-2">
+          <app-form-field label="Bio" type="text" placeholder="Team Manager" />
+        </div>
+      </div>
+
+      <app-modal-footer
+        className="mt-6 justify-end"
+        (cancel)="closeModal()"
+        (confirm)="handleSave()"
+      />
+    </form>
+  </app-modal>
+</app-component-card>

@@ -1,0 +1,337 @@
+<aside
+  class="fixed top-0 left-0 z-50 flex h-screen flex-col bg-sidebar text-sidebar-foreground transition-all duration-200 ease-linear overflow-hidden"
+  [ngClass]="{
+    'w-64 p-3': (isExpanded$ | async) || (isMobileOpen$ | async) || (isHovered$ | async),
+    'w-13 p-1': !((isExpanded$ | async) || (isMobileOpen$ | async) || (isHovered$ | async)),
+    'translate-x-0': (isMobileOpen$ | async),
+    '-translate-x-full md:translate-x-0': !(isMobileOpen$ | async)
+  }"
+  (mouseenter)="onSidebarMouseEnter()"
+  (mouseleave)="sidebarService.setHovered(false)"
+>
+  <div class="flex flex-col gap-2 p-2">
+    <a routerLink="/" class="flex items-center justify-center gap-2 rounded-md p-2 hover:bg-accent transition-colors">
+      <div class="flex aspect-square size-8 shrink-0 items-center justify-center rounded-lg">
+        <img [src]="(theme$ | async) === 'dark' ? '/logo-ligth.svg' : '/logo.svg'" alt="StarTail Admin" class="size-8 rounded-lg" />
+      </div>
+      @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+        <div class="grid flex-1 text-left text-sm leading-tight min-w-0">
+          <span class="truncate font-semibold">StarTail Admin</span>
+          <span class="truncate text-xs text-muted-foreground">Dashboard</span>
+        </div>
+        <app-icon name="chevrons-up-down" size="16" className="ms-auto size-4 shrink-0 text-sidebar-foreground/70" />
+      }
+    </a>
+  </div>
+
+  <div class="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto no-scrollbar">
+    <div class="flex w-full min-w-0 flex-col p-2">
+      @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+        <div class="flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-sidebar-foreground/70 uppercase tracking-wider">
+          Menu
+        </div>
+      }
+      <ul class="flex w-full min-w-0 flex-col gap-1">
+        @for (nav of navItems; track $index; let i = $index) {
+        <li class="group/menu-item relative">
+          @if (nav.subItems) {
+            <button
+              (click)="toggleSubmenu('main', i)"
+              class="menu-item group cursor-pointer"
+              [class.menu-item-active]="openSubmenu === 'main-' + i"
+              [class.menu-item-inactive]="openSubmenu !== 'main-' + i"
+            >
+              <app-icon
+                [name]="nav.icon"
+                class="menu-item-icon-size shrink-0"
+                [class.menu-item-icon-active]="openSubmenu === 'main-' + i"
+                [class.menu-item-icon-inactive]="openSubmenu !== 'main-' + i"
+              />
+              @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+                <span class="flex-1 truncate">{{ nav.name }}</span>
+                <app-icon
+                  name="chevron-right"
+                  size="16"
+                  class="ms-auto size-4 shrink-0 transition-transform duration-200"
+                  [ngClass]="{ 'rotate-90': openSubmenu === 'main-' + i }"
+                />
+              }
+            </button>
+            @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+              <div
+                class="overflow-hidden transition-all duration-300"
+                [id]="'main-' + i"
+                [ngStyle]="{
+                  height: openSubmenu === 'main-' + i
+                    ? (subMenuHeights['main-' + i] || 0) + 'px'
+                    : '0px'
+                }"
+              >
+                <ul class="mx-3.5 flex min-w-0 flex-col gap-1 border-s border-sidebar-border px-2.5 py-0.5">
+                  @for (subItem of nav.subItems; track $index) {
+                  <li>
+                    <a
+                      [routerLink]="subItem.path"
+                      (click)="onSubmenuClick()"
+                      class="flex h-7 min-w-0 items-center gap-2 overflow-hidden rounded-md px-2 text-sm transition-colors"
+                      [ngClass]="{
+                        'bg-accent text-accent-foreground font-medium': isActive(subItem.path),
+                        'text-sidebar-foreground hover:bg-accent hover:text-accent-foreground': !isActive(subItem.path)
+                      }"
+                    >
+                      <span class="truncate">{{ subItem.name }}</span>
+                      @if (subItem.pro) {
+                        <span class="ms-auto shrink-0 rounded-md border px-1.5 py-0 text-[10px] font-medium text-muted-foreground">PRO</span>
+                      }
+                      @if (subItem.new) {
+                        <span class="ms-auto shrink-0 rounded-md border px-1.5 py-0 text-[10px] font-medium text-muted-foreground">NEW</span>
+                      }
+                    </a>
+                  </li>
+                  }
+                </ul>
+              </div>
+            }
+          } @else {
+            @if (nav.path) {
+              <a
+                [routerLink]="nav.path"
+                class="menu-item group"
+                [ngClass]="{
+                  'menu-item-active': isActive(nav.path),
+                  'menu-item-inactive': !isActive(nav.path)
+                }"
+              >
+                <app-icon
+                  [name]="nav.icon"
+                  class="menu-item-icon-size shrink-0"
+                  [ngClass]="{
+                    'menu-item-icon-active': isActive(nav.path),
+                    'menu-item-icon-inactive': !isActive(nav.path)
+                  }"
+                />
+                @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+                  <span class="truncate">{{ nav.name }}</span>
+                }
+              </a>
+            }
+          }
+        </li>
+        }
+      </ul>
+    </div>
+
+    <div class="flex w-full min-w-0 flex-col p-2">
+      @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+        <div class="flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-sidebar-foreground/70 uppercase tracking-wider">
+          Components
+        </div>
+      }
+      <ul class="flex w-full min-w-0 flex-col gap-1">
+        @for (nav of componentItems; track $index; let i = $index) {
+        <li class="group/menu-item relative">
+          @if (nav.subItems) {
+            <button
+              (click)="toggleSubmenu('components', i)"
+              class="menu-item group cursor-pointer"
+              [class.menu-item-active]="openSubmenu === 'components-' + i"
+              [class.menu-item-inactive]="openSubmenu !== 'components-' + i"
+            >
+              <app-icon
+                [name]="nav.icon"
+                class="menu-item-icon-size shrink-0"
+                [class.menu-item-icon-active]="openSubmenu === 'components-' + i"
+                [class.menu-item-icon-inactive]="openSubmenu !== 'components-' + i"
+              />
+              @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+                <span class="flex-1 truncate">{{ nav.name }}</span>
+                <app-icon
+                  name="chevron-right"
+                  size="16"
+                  class="ms-auto size-4 shrink-0 transition-transform duration-200"
+                  [ngClass]="{ 'rotate-90': openSubmenu === 'components-' + i }"
+                />
+              }
+            </button>
+            @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+              <div
+                class="overflow-hidden transition-all duration-300"
+                [id]="'components-' + i"
+                [ngStyle]="{
+                  height: openSubmenu === 'components-' + i
+                    ? (subMenuHeights['components-' + i] || 0) + 'px'
+                    : '0px'
+                }"
+              >
+                <ul class="mx-3.5 flex min-w-0 flex-col gap-1 border-s border-sidebar-border px-2.5 py-0.5">
+                  @for (subItem of nav.subItems; track $index) {
+                  <li>
+                    <a
+                      [routerLink]="subItem.path"
+                      (click)="onSubmenuClick()"
+                      class="flex h-7 min-w-0 items-center gap-2 overflow-hidden rounded-md px-2 text-sm transition-colors"
+                      [ngClass]="{
+                        'bg-accent text-accent-foreground font-medium': isActive(subItem.path),
+                        'text-sidebar-foreground hover:bg-accent hover:text-accent-foreground': !isActive(subItem.path)
+                      }"
+                    >
+                      <span class="truncate">{{ subItem.name }}</span>
+                    </a>
+                  </li>
+                  }
+                </ul>
+              </div>
+            }
+          } @else {
+            @if (nav.path) {
+              <a
+                [routerLink]="nav.path"
+                class="menu-item group"
+                [ngClass]="{
+                  'menu-item-active': isActive(nav.path),
+                  'menu-item-inactive': !isActive(nav.path)
+                }"
+              >
+                <app-icon
+                  [name]="nav.icon"
+                  class="menu-item-icon-size shrink-0"
+                  [ngClass]="{
+                    'menu-item-icon-active': isActive(nav.path),
+                    'menu-item-icon-inactive': !isActive(nav.path)
+                  }"
+                />
+                @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+                  <span class="truncate">{{ nav.name }}</span>
+                }
+              </a>
+            }
+          }
+        </li>
+        }
+      </ul>
+    </div>
+
+    <div class="flex w-full min-w-0 flex-col p-2">
+      @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+        <div class="flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-sidebar-foreground/70 uppercase tracking-wider">
+          Others
+        </div>
+      }
+      <ul class="flex w-full min-w-0 flex-col gap-1">
+        @for (nav of othersItems; track $index; let i = $index) {
+        <li class="group/menu-item relative">
+          @if (nav.subItems) {
+            <button
+              (click)="toggleSubmenu('others', i)"
+              class="menu-item group cursor-pointer"
+              [class.menu-item-active]="openSubmenu === 'others-' + i"
+              [class.menu-item-inactive]="openSubmenu !== 'others-' + i"
+            >
+              <app-icon
+                [name]="nav.icon"
+                class="menu-item-icon-size shrink-0"
+                [class.menu-item-icon-active]="openSubmenu === 'others-' + i"
+                [class.menu-item-icon-inactive]="openSubmenu !== 'others-' + i"
+              />
+              @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+                <span class="flex-1 truncate">{{ nav.name }}</span>
+                <app-icon
+                  name="chevron-right"
+                  size="16"
+                  class="ms-auto size-4 shrink-0 transition-transform duration-200"
+                  [ngClass]="{ 'rotate-90': openSubmenu === 'others-' + i }"
+                />
+              }
+            </button>
+            @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+              <div
+                class="overflow-hidden transition-all duration-300"
+                [id]="'others-' + i"
+                [ngStyle]="{
+                  height: openSubmenu === 'others-' + i
+                    ? (subMenuHeights['others-' + i] || 0) + 'px'
+                    : '0px'
+                }"
+              >
+                <ul class="mx-3.5 flex min-w-0 flex-col gap-1 border-s border-sidebar-border px-2.5 py-0.5">
+                  @for (subItem of nav.subItems; track $index) {
+                  <li>
+                    <a
+                      [routerLink]="subItem.path"
+                      (click)="onSubmenuClick()"
+                      class="flex h-7 min-w-0 items-center gap-2 overflow-hidden rounded-md px-2 text-sm transition-colors"
+                      [ngClass]="{
+                        'bg-accent text-accent-foreground font-medium': isActive(subItem.path),
+                        'text-sidebar-foreground hover:bg-accent hover:text-accent-foreground': !isActive(subItem.path)
+                      }"
+                    >
+                      <span class="truncate">{{ subItem.name }}</span>
+                      @if (subItem.pro) {
+                        <span class="ms-auto shrink-0 rounded-md border px-1.5 py-0 text-[10px] font-medium text-muted-foreground">PRO</span>
+                      }
+                      @if (subItem.new) {
+                        <span class="ms-auto shrink-0 rounded-md border px-1.5 py-0 text-[10px] font-medium text-muted-foreground">NEW</span>
+                      }
+                    </a>
+                  </li>
+                  }
+                </ul>
+              </div>
+            }
+          } @else {
+            @if (nav.path) {
+              <a
+                [routerLink]="nav.path"
+                class="menu-item group"
+                [ngClass]="{
+                  'menu-item-active': isActive(nav.path),
+                  'menu-item-inactive': !isActive(nav.path)
+                }"
+              >
+                <app-icon
+                  [name]="nav.icon"
+                  class="menu-item-icon-size shrink-0"
+                  [ngClass]="{
+                    'menu-item-icon-active': isActive(nav.path),
+                    'menu-item-icon-inactive': !isActive(nav.path)
+                  }"
+                />
+                @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+                  <span class="truncate">{{ nav.name }}</span>
+                }
+              </a>
+            }
+          }
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2 p-2 border-t border-sidebar-border">
+    <div class="flex items-center justify-center gap-2 rounded-md p-2">
+      <div class="relative flex size-8 shrink-0 overflow-hidden rounded-lg bg-muted">
+        <img src="/images/user/profile.jpg" alt="User" class="aspect-square size-full object-cover" />
+      </div>
+      @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+        <div class="grid flex-1 text-left text-sm leading-tight min-w-0">
+          <span class="truncate font-semibold">Matheus</span>
+          <span class="truncate text-xs text-muted-foreground">matheus.yuri.melo&#64;gmail.com</span>
+        </div>
+        <app-icon name="chevrons-up-down" size="16" className="ms-auto size-4 shrink-0 text-sidebar-foreground/70" />
+      }
+    </div>
+  </div>
+</aside>
+
+<button
+  aria-label="Toggle Sidebar"
+  tabindex="-1"
+  title="Toggle Sidebar"
+  (click)="sidebarService.toggleExpanded()"
+  class="fixed top-0 z-50 hidden h-screen w-4 -translate-x-1/2 transition-all duration-200 ease-linear after:absolute after:inset-y-0 after:start-1/2 after:w-[1px] after:bg-sidebar-border hover:after:bg-sidebar-foreground/30 sm:flex cursor-e-resize"
+  [ngClass]="{
+    'left-64': (isExpanded$ | async) || (isMobileOpen$ | async) || (isHovered$ | async),
+    'left-13': !((isExpanded$ | async) || (isMobileOpen$ | async) || (isHovered$ | async))
+  }"
+></button>

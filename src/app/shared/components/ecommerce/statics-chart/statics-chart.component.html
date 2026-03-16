@@ -1,0 +1,30 @@
+<div class="flex flex-col gap-5 mb-6 sm:flex-row sm:justify-between">
+  <div class="w-full">
+    <h3 class="font-semibold leading-none">
+      Statistics
+    </h3>
+    <p class="mt-1.5 text-sm text-muted-foreground">
+      Target you've set for each month
+    </p>
+  </div>
+  <div class="flex items-start w-full gap-3 sm:justify-end">
+    <app-chart-tab />
+
+    <div class="relative max-w-40">
+      <input #datepicker
+        class="h-9 w-full max-w-11 rounded-md border dark:border-white bg-background px-3 pl-9 pr-4 text-sm font-medium text-foreground shadow-xs focus:outline-hidden focus:ring-1 focus:ring-ring xl:max-w-fit xl:pl-9"
+        placeholder="Select dates" data-class="flatpickr-right" readonly="readonly" />
+      <div class="absolute inset-0 right-auto flex items-center pointer-events-none left-2.5">
+        <app-icon name="calendar-stroke" size="16" className="text-muted-foreground" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="max-w-full overflow-x-auto custom-scrollbar">
+  <div class="min-w-[1000px] xl:min-w-full">
+    <apx-chart #chartRef [series]="series" [chart]="chart" [colors]="colors" [stroke]="stroke" [fill]="fill" [markers]="markers"
+      [grid]="grid" [dataLabels]="dataLabels" [tooltip]="tooltip" [xaxis]="xaxis" [yaxis]="yaxis"
+      [legend]="legend"></apx-chart>
+  </div>
+</div>

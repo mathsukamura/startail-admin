@@ -1,0 +1,25 @@
+<div class="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground">
+  <button
+    (click)="setSelected('optionOne')"
+    class="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-all"
+    [ngClass]="getButtonClass('optionOne')"
+  >
+    Monthly
+  </button>
+
+  <button
+    (click)="setSelected('optionTwo')"
+    class="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-all"
+    [ngClass]="getButtonClass('optionTwo')"
+  >
+    Quarterly
+  </button>
+
+  <button
+    (click)="setSelected('optionThree')"
+    class="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-all"
+    [ngClass]="getButtonClass('optionThree')"
+  >
+    Annually
+  </button>
+</div>

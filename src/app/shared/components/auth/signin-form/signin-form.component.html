@@ -1,0 +1,94 @@
+<div class="flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground shadow-sm">
+  <div class="px-6">
+    <h2 class="text-lg font-semibold tracking-tight">Sign in</h2>
+    <p class="text-sm text-muted-foreground mt-1.5">
+      Enter your email and password below to <br />
+      log into your account
+    </p>
+  </div>
+
+  <div class="px-6">
+    <form (ngSubmit)="onSignIn()" class="grid gap-3">
+      <div class="grid gap-1.5">
+        <label class="text-sm font-medium leading-none" for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          placeholder="name&#64;example.com"
+          [(ngModel)]="email"
+          name="email"
+          class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          required
+        />
+      </div>
+
+      <div class="grid gap-1.5 relative">
+        <label class="text-sm font-medium leading-none" for="password">Password</label>
+        <a routerLink="/forgot-password" class="absolute end-0 -top-0.5 text-sm font-medium text-muted-foreground hover:opacity-75">
+          Forgot password?
+        </a>
+        <div class="relative">
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="********"
+            [(ngModel)]="password"
+            name="password"
+            class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring pr-10"
+            required
+          />
+          <button
+            type="button"
+            (click)="togglePasswordVisibility()"
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+          >
+            @if (showPassword) {
+              <app-icon name="eye-auth" size="16" />
+            } @else {
+              <app-icon name="eye-off-auth" size="16" />
+            }
+          </button>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-9 px-4 py-2 w-full mt-2"
+      >
+        <app-icon name="sign-in" size="16" />
+        Sign in
+      </button>
+
+      <div class="relative my-2">
+        <div class="absolute inset-0 flex items-center">
+          <span class="w-full border-t"></span>
+        </div>
+        <div class="relative flex justify-center text-xs uppercase">
+          <span class="bg-card px-2 text-muted-foreground">
+            Or continue with
+          </span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2">
+        <button type="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">
+          <app-icon name="github-24" size="16" [fillCurrent]="true" />
+          GitHub
+        </button>
+        <button type="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">
+          <app-icon name="facebook-24" size="16" [fillCurrent]="true" />
+          Facebook
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="px-6">
+    <p class="px-8 text-center text-sm text-muted-foreground">
+      By clicking sign in, you agree to our
+      <a href="#" class="underline underline-offset-4 hover:text-primary">Terms of Service</a>
+      and
+      <a href="#" class="underline underline-offset-4 hover:text-primary">Privacy Policy</a>.
+    </p>
+  </div>
+</div>

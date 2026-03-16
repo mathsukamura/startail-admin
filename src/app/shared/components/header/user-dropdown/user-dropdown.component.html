@@ -1,0 +1,56 @@
+<div class="relative">
+  <button
+    (click)="toggleDropdown()"
+    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium hover:bg-accent hover:text-accent-foreground relative h-8 w-8"
+  >
+    <span class="relative flex size-8 shrink-0 overflow-hidden rounded-full">
+      <img src="/images/user/profile.jpg" alt="User" class="aspect-square size-full" />
+    </span>
+  </button>
+
+  <app-dropdown [isOpen]="isOpen" (close)="closeDropdown()"
+    className="absolute right-0 mt-2 flex w-56 flex-col rounded-md border bg-popover p-1 text-popover-foreground shadow-md">
+    <div class="flex flex-col gap-1.5 px-2 py-1.5">
+      <span class="text-sm leading-none font-medium">Matheus</span>
+      <span class="text-xs leading-none text-muted-foreground">matheus.yuri.melo&#64;gmail.com</span>
+    </div>
+
+    <div class="-mx-1 my-1 h-px bg-border"></div>
+
+    <ul class="flex flex-col">
+      <li>
+        <app-dropdown-item-two (itemClick)="closeDropdown()" tag="a" [to]="'/profile'"
+          className="relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none hover:bg-accent hover:text-accent-foreground">
+          <app-icon name="user" size="16" />
+          Profile
+          <span class="ms-auto text-xs tracking-widest text-muted-foreground">⇧⌘P</span>
+        </app-dropdown-item-two>
+      </li>
+      <li>
+        <app-dropdown-item-two (itemClick)="closeDropdown()" tag="a" [to]="'/profile'"
+          className="relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none hover:bg-accent hover:text-accent-foreground">
+          <app-icon name="billing" size="16" />
+          Billing
+          <span class="ms-auto text-xs tracking-widest text-muted-foreground">⌘B</span>
+        </app-dropdown-item-two>
+      </li>
+      <li>
+        <app-dropdown-item-two (itemClick)="closeDropdown()" tag="a" [to]="'/profile'"
+          className="relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none hover:bg-accent hover:text-accent-foreground">
+          <app-icon name="settings" size="16" />
+          Settings
+          <span class="ms-auto text-xs tracking-widest text-muted-foreground">⌘S</span>
+        </app-dropdown-item-two>
+      </li>
+    </ul>
+
+    <div class="-mx-1 my-1 h-px bg-border"></div>
+
+    <a routerLink="/signin"
+      class="relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none text-destructive hover:bg-destructive/10">
+      <app-icon name="sign-out" size="16" />
+      Sign out
+      <span class="ms-auto text-xs tracking-widest text-muted-foreground">⇧⌘Q</span>
+    </a>
+  </app-dropdown>
+</div>

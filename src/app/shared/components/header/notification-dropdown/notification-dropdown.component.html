@@ -1,0 +1,112 @@
+<div class="relative">
+  <button
+    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium hover:bg-accent hover:text-accent-foreground relative size-9 scale-95"
+    (click)="toggleDropdown()"
+    aria-label="Notifications"
+  >
+    <span
+      class="absolute right-1 top-1 z-10 h-2 w-2 rounded-full bg-destructive"
+      [ngClass]="{ 'hidden': !notifying, 'flex': notifying }"
+    >
+      <span class="absolute inline-flex w-full h-full rounded-full opacity-75 animate-ping bg-destructive"></span>
+    </span>
+    <app-icon name="bell" size="16" />
+  </button>
+  <app-dropdown
+    [isOpen]="isOpen"
+    (close)="closeDropdown()"
+    className="absolute right-0 mt-2 flex h-[400px] w-80 flex-col rounded-md border bg-popover p-1 text-popover-foreground shadow-md"
+  >
+    <div class="flex items-center justify-between px-2 py-1.5">
+      <h5 class="text-sm font-medium">Notifications</h5>
+      <button
+        (click)="toggleDropdown()"
+        class="text-muted-foreground hover:text-foreground transition"
+      >
+        <app-icon name="close-x" size="16" />
+      </button>
+    </div>
+
+    <div class="-mx-1 my-1 h-px bg-border"></div>
+
+    <ul class="flex flex-col h-auto overflow-y-auto custom-scrollbar">
+      <li>
+        <app-dropdown-item
+          (itemClick)="closeDropdown()"
+          [className]="'w-full text-left flex gap-3 rounded-sm px-2 py-1.5 text-sm hover:bg-accent'"
+        >
+          <span class="relative flex size-8 shrink-0 overflow-hidden rounded-full">
+            <img src="/images/user/user-02.jpg" alt="User" class="aspect-square size-full" />
+          </span>
+          <span class="block min-w-0 flex-1">
+            <span class="block text-sm space-x-1">
+              <span class="font-medium">Terry Franci</span>
+              <span class="text-muted-foreground">requested access</span>
+            </span>
+            <span class="text-xs text-muted-foreground">5 min ago</span>
+          </span>
+        </app-dropdown-item>
+      </li>
+      <li>
+        <app-dropdown-item
+          (itemClick)="closeDropdown()"
+          [className]="'w-full text-left flex gap-3 rounded-sm px-2 py-1.5 text-sm hover:bg-accent'"
+        >
+          <span class="relative flex size-8 shrink-0 overflow-hidden rounded-full">
+            <img src="/images/user/user-03.jpg" alt="User" class="aspect-square size-full" />
+          </span>
+          <span class="block min-w-0 flex-1">
+            <span class="block text-sm space-x-1">
+              <span class="font-medium">Alena Franci</span>
+              <span class="text-muted-foreground">updated project</span>
+            </span>
+            <span class="text-xs text-muted-foreground">8 min ago</span>
+          </span>
+        </app-dropdown-item>
+      </li>
+      <li>
+        <app-dropdown-item
+          (itemClick)="closeDropdown()"
+          [className]="'w-full text-left flex gap-3 rounded-sm px-2 py-1.5 text-sm hover:bg-accent'"
+        >
+          <span class="relative flex size-8 shrink-0 overflow-hidden rounded-full">
+            <img src="/images/user/user-04.jpg" alt="User" class="aspect-square size-full" />
+          </span>
+          <span class="block min-w-0 flex-1">
+            <span class="block text-sm space-x-1">
+              <span class="font-medium">Jocelyn Kenter</span>
+              <span class="text-muted-foreground">commented on task</span>
+            </span>
+            <span class="text-xs text-muted-foreground">15 min ago</span>
+          </span>
+        </app-dropdown-item>
+      </li>
+      <li>
+        <app-dropdown-item
+          (itemClick)="closeDropdown()"
+          [className]="'w-full text-left flex gap-3 rounded-sm px-2 py-1.5 text-sm hover:bg-accent'"
+        >
+          <span class="relative flex size-8 shrink-0 overflow-hidden rounded-full">
+            <img src="/images/user/user-05.jpg" alt="User" class="aspect-square size-full" />
+          </span>
+          <span class="block min-w-0 flex-1">
+            <span class="block text-sm space-x-1">
+              <span class="font-medium">Brandon Philips</span>
+              <span class="text-muted-foreground">sent a message</span>
+            </span>
+            <span class="text-xs text-muted-foreground">1 hr ago</span>
+          </span>
+        </app-dropdown-item>
+      </li>
+    </ul>
+
+    <div class="-mx-1 my-1 h-px bg-border"></div>
+
+    <a
+      routerLink="/"
+      class="block px-2 py-1.5 text-sm text-center text-muted-foreground hover:text-foreground"
+    >
+      View all notifications
+    </a>
+  </app-dropdown>
+</div>

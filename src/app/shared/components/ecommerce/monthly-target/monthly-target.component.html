@@ -1,0 +1,38 @@
+<div>
+  <div class="relative">
+    <div class="max-h-[260px]" id="chartDarkStyle">
+      <apx-chart #chartRef
+        [series]="series"
+        [chart]="chart"
+        [plotOptions]="plotOptions"
+        [fill]="fill"
+        [stroke]="stroke"
+        [labels]="labels"
+        [colors]="colors"
+      ></apx-chart>
+    </div>
+    <span class="absolute left-1/2 top-full -translate-x-1/2 -translate-y-[95%] rounded-full bg-secondary px-3 py-1 text-xs font-medium text-foreground">
+      +10%
+    </span>
+  </div>
+  <p class="mx-auto mt-8 w-full max-w-[300px] text-center text-sm text-muted-foreground">
+    You earn $3287 today, it's higher than last month. Keep up your good work!
+  </p>
+</div>
+
+<div class="flex items-center justify-center gap-5 border-t border-border mt-6 pt-4">
+  <div class="text-center">
+    <p class="mb-1 text-xs text-muted-foreground">Target</p>
+    <p class="text-sm font-semibold">$20K</p>
+  </div>
+  <div class="w-px bg-border h-7"></div>
+  <div class="text-center">
+    <p class="mb-1 text-xs text-muted-foreground">Revenue</p>
+    <p class="text-sm font-semibold">$20K</p>
+  </div>
+  <div class="w-px bg-border h-7"></div>
+  <div class="text-center">
+    <p class="mb-1 text-xs text-muted-foreground">Today</p>
+    <p class="text-sm font-semibold">$20K</p>
+  </div>
+</div>
